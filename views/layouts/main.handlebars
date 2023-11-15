@@ -12,17 +12,21 @@
 <body>
   <div class="flex-column justify-space-around">
     <header class="display-flex justify-space-between align-center p-2">
-      <h1>
-        <span role="img" aria-label="money">💸</span>
-        <a href="/">Start Posting</a>
-      </h1>
+      <h1>Welcome to my Blog!</h1>
+      <a href="/">Go to home page</a>
+      <br/>
+      <a href="/dashboard">Go to my page</a>
+      <br/>
+      <br/>
       <nav>
         <!-- Conditionally render login or logout links -->
         {{#if logged_in}}
         {{!-- <a href="/profile">Profile</a> | --}}
         <button class="no-button" id="logout">Logout</button>
         {{else}}
-        
+        <a href="register">Join Us</a>
+        <br/>
+        <a href="login">Login</a>
         {{/if}}
       </nav>
     </header>
@@ -39,8 +43,17 @@
   
   <script>
 
-document.getElementById('logout').onclick = function(e){
+document.getElementById('logout').onclick =async function(e){
 e.preventDefault();
+const response = await fetch('/api/user/logout', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+if(response.ok){
+  document.location.replace('/');
+}
 
 }
 
